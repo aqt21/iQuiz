@@ -7,98 +7,194 @@
 //
 
 import UIKit
+import Foundation
+import SystemConfiguration
+
 var quizQuestions: [QuizQuestions] = []
 var currSubject: Int = 0
 
 class iQuizController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var settingPopup: UIView!
+    @IBOutlet weak var settingURL: UITextField!
     
     var quizzes: [Quiz] = []
+    var currUrl = "https://tednewardsandbox.site44.com/questions.json"
+    
+    struct QuizDescription: Decodable {
+        let title: String
+        let desc: String
+        let questions: [QuizQuestion]
+    }
+    
+    struct QuizQuestion: Decodable {
+        let text: String
+        let answer: String
+        let answers: [String]
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        quizzes = createArray()
-        quizQuestions = createQuestions()
+        let userDefaults = UserDefaults.standard
+        if isInternetAvailable() {
+            guard let url = URL(string: currUrl) else {
+                return
+            }
+            URLSession.shared.dataTask(with: url) { (data, response, err) in
+                guard let data = data else {
+                    return
+                }
+                
+                do {
+                    userDefaults.set(data, forKey: "savedQuizzes")
+                    let quizDescriptions = try
+                        JSONDecoder().decode([QuizDescription].self, from: data)
+                    for i in 0 ... quizDescriptions.count - 1 {
+                        self.quizzes.append(self.createQuizCell(title: quizDescriptions[i].title, desc: quizDescriptions[i].desc))
+                        quizQuestions.append(self.createQuestions(subject: quizDescriptions[i].title, questions: quizDescriptions[i].questions))
+                    }
+                } catch let jsonErr {
+                    let alert = UIAlertController(title: "My Alert", message: "Error downloading quiz. Check URL. HTTPS only supported", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: { _ in
+                        NSLog("The \"offline\" alert occured.")
+                    }))
+                }
+                
+                }.resume()
+        } else {
+            let alert = UIAlertController(title: "My Alert", message: "No wifi connection. Using local data.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: { _ in
+                NSLog("The \"offline\" alert occured.")
+            }))
+            self.present(alert, animated: true, completion: nil)
+            do {
+                let savedData: Data! = userDefaults.data(forKey: "savedQuizzes")
+                let quizDescriptions = try
+                    JSONDecoder().decode([QuizDescription].self, from: savedData)
+                for i in 0 ... quizDescriptions.count - 1 {
+                    self.quizzes.append(self.createQuizCell(title: quizDescriptions[i].title, desc: quizDescriptions[i].desc))
+                    quizQuestions.append(self.createQuestions(subject: quizDescriptions[i].title, questions: quizDescriptions[i].questions))
+                }
+            } catch let jsonErr {
+                print("No data stored", jsonErr)
+            }
+        }
+        
         tableView.delegate = self
         tableView.dataSource = self
     }
     
     @IBAction func settingsClick(_ sender: UIBarButtonItem) {
-        let alert = UIAlertController(title: "Settings Alert", message: "Settings go here", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: { _ in
-            NSLog("The \"OK\" alert occured.")
-        }))
-        self.present(alert, animated: true, completion: nil)
+        settingPopup.isHidden = false
+        
     }
     
-    func createArray() -> [Quiz] {
-        var tempQuizzes: [Quiz] = []
-        let quiz1 = Quiz(icon: #imageLiteral(resourceName: "Marvel Icon"), title: "Marvel Super Heroes", desc: "Are you a true Marvel fan?")
-        let quiz2 = Quiz(icon: #imageLiteral(resourceName: "Math"), title: "Mathematics", desc: "Test yourself with some quick maths")
-        let quiz3 = Quiz(icon: #imageLiteral(resourceName: "Science"), title: "Science", desc: "Not even Einstein could pass this test!")
-        
-        tempQuizzes.append(quiz1)
-        tempQuizzes.append(quiz2)
-        tempQuizzes.append(quiz3)
-        
-        return tempQuizzes
+    @IBAction func checkClick(_ sender: UIButton) {
+        currUrl = settingURL.text!
+        let userDefaults = UserDefaults.standard
+        if isInternetAvailable() {
+            guard let url = URL(string: currUrl) else {
+                return
+            }
+            URLSession.shared.dataTask(with: url) { (data, response, err) in
+                guard let data = data else {
+                    return
+                }
+                
+                do {
+                    userDefaults.set(data, forKey: "savedQuizzes")
+                    let quizDescriptions = try
+                        JSONDecoder().decode([QuizDescription].self, from: data)
+                    for i in 0 ... quizDescriptions.count - 1 {
+                        self.quizzes.append(self.createQuizCell(title: quizDescriptions[i].title, desc: quizDescriptions[i].desc))
+                        quizQuestions.append(self.createQuestions(subject: quizDescriptions[i].title, questions: quizDescriptions[i].questions))
+                    }
+                } catch let jsonErr {
+                    print("error")
+                    let alert = UIAlertController(title: "My Alert", message: "Error downloading quiz. Check URL. HTTPS only supported", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: { _ in
+                        NSLog("The \"offline\" alert occured.")
+                    }))
+                }
+                
+                }.resume()
+        } else {
+            let alert = UIAlertController(title: "My Alert", message: "No wifi connection. Cant get data", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: { _ in
+                NSLog("The \"offline\" alert occured.")
+            }))
+        }
+        settingPopup.isHidden = true
+        tableView.delegate = self
+        tableView.dataSource = self
     }
     
-    func createQuestions() -> [QuizQuestions] {
-        var tempQuestions: [QuizQuestions] = []
-        let marvelSubject = quizzes[0].title
-        var marvelQuestions: [String] = []
-        var marvelAnswers: [[String]] = []
-        var marvelRightAnswers: [String] = []
-        let marvelQuestion1 = "What superhero is Tony Stark?"
-        let marvelAnswers1 = ["The Hulk", "Iron Man", "Green Lantern", "Spiderman"]
-        let marvelRightAnswer1 = "Iron Man"
-        marvelQuestions.append(marvelQuestion1)
-        marvelAnswers.append(marvelAnswers1)
-        marvelRightAnswers.append(marvelRightAnswer1)
-        let marvelQuestion2 = "What is Peter Parkers middle name?"
-        let marvelAnswers2 = ["Benjamin", "William", "Brode", "Jackson"]
-        let marvelRightAnswer2 = "Benjamin"
-        marvelQuestions.append(marvelQuestion2)
-        marvelAnswers.append(marvelAnswers2)
-        marvelRightAnswers.append(marvelRightAnswer2)
-        let marvelQuestion3 = "Which villain possessed the Infinity Gems"
-        let marvelAnswers3 = ["Loki", "Galactus", "Thanos", "Magneto"]
-        let marvelRightAnswer3 = "Thanos"
-        marvelQuestions.append(marvelQuestion3)
-        marvelAnswers.append(marvelAnswers3)
-        marvelRightAnswers.append(marvelRightAnswer3)
-        var marvelQQ : QuizQuestions
+    @IBAction func cancelClick(_ sender: UIButton) {
+        settingPopup.isHidden = true
+    }
+    
+    func getQuizzes(url: String) {
+        guard let url = URL(string: currUrl) else {
+            return
+        }
+        URLSession.shared.dataTask(with: url) { (data, response, err) in
+            guard let data = data else {
+                return
+            }
+            
+            do {
+                let quizDescriptions = try
+                    JSONDecoder().decode([QuizDescription].self, from: data)
+                for i in 0 ... quizDescriptions.count - 1 {
+                    self.quizzes.append(self.createQuizCell(title: quizDescriptions[i].title, desc: quizDescriptions[i].desc))
+                    quizQuestions.append(self.createQuestions(subject: quizDescriptions[i].title, questions: quizDescriptions[i].questions))
+                }
+            } catch let jsonErr {
+                print("Error reading jsonData:", jsonErr)
+            }
+            
+            }.resume()
+    }
+ 
+    func createQuizCell(title: String, desc: String) -> Quiz {
+        let quiz = Quiz(icon: #imageLiteral(resourceName: "Science"), title: title, desc: desc)
+
+        return quiz
+    }
+    
+    func createQuestions(subject: String, questions: [QuizQuestion]) -> QuizQuestions {
+        let currSubject = subject
+        var currQuestions: [String] = []
+        var currAnswers: [[String]] = []
+        var currRightAnswers: [String] = []
+        for i in 0 ... questions.count - 1 {
+            currQuestions.append(questions[i].text)
+            currAnswers.append(questions[i].answers)
+            let answerIndex: Int? = Int(questions[i].answer)
+            currRightAnswers.append(questions[i].answers[answerIndex! - 1])
+        }
+        let currQuestionData = QuizQuestions(subject: currSubject, questions: currQuestions, answers: currAnswers, rightAnswers: currRightAnswers)
+        return currQuestionData
+    }
+    
+    func isInternetAvailable() -> Bool {
+        var zeroAddress = sockaddr_in()
+        zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
+        zeroAddress.sin_family = sa_family_t(AF_INET)
         
-        let marvelQ1 = QuizQuestions(subject: marvelSubject, questions: marvelQuestions, answers: marvelAnswers, rightAnswers: marvelRightAnswers)
-        tempQuestions.append(marvelQ1)
+        let defaultRouteReachability = withUnsafePointer(to: &zeroAddress) {
+            $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {zeroSockAddress in
+                SCNetworkReachabilityCreateWithAddress(nil, zeroSockAddress)
+            }
+        }
         
-        let mathSubject = quizzes[1].title
-        var mathQuestions: [String] = []
-        var mathAnswers: [[String]] = []
-        var mathRightAnswers: [String] = []
-        let mathQuestion1 = "What is 4 * 3?"
-        let mathAnswers1 = ["15", "20", "17", "12"]
-        let mathRightAnswer1 = "12"
-        mathQuestions.append(mathQuestion1)
-        mathAnswers.append(mathAnswers1)
-        mathRightAnswers.append(mathRightAnswer1)
-        let mathQ1 = QuizQuestions(subject: mathSubject, questions: mathQuestions, answers: mathAnswers, rightAnswers: mathRightAnswers)
-        tempQuestions.append(mathQ1)
-        
-        let scienceSubject = quizzes[2].title
-        var scienceQuestions: [String] = []
-        var scienceAnswers: [[String]] = []
-        var scienceRightAnswers: [String] = []
-        let scienceQuestion1 = "What element does the symbol As stand for"
-        let scienceAnswers1 = ["Astatine", "Arsenic", "Actinium", "Argon"]
-        let scienceRightAnswer1 = "Arsenic"
-        scienceQuestions.append(scienceQuestion1)
-        scienceAnswers.append(scienceAnswers1)
-        scienceRightAnswers.append(scienceRightAnswer1)
-        let scienceQ1 = QuizQuestions(subject: scienceSubject, questions: scienceQuestions, answers: scienceAnswers, rightAnswers: scienceRightAnswers)
-        tempQuestions.append(scienceQ1)
-        return tempQuestions
+        var flags = SCNetworkReachabilityFlags()
+        if !SCNetworkReachabilityGetFlags(defaultRouteReachability!, &flags) {
+            return false
+        }
+        let isReachable = flags.contains(.reachable)
+        let needsConnection = flags.contains(.connectionRequired)
+        return (isReachable && !needsConnection)
     }
 }
 
@@ -109,7 +205,6 @@ extension iQuizController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let quiz = quizzes[indexPath.row]
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "QuizCell") as! QuizCell
         cell.setQuiz(quiz: quiz)
         
