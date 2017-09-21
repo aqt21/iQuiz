@@ -83,27 +83,9 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Fs-H7-Ga6">
-                                <rect key="frame" x="16" y="313" width="343" height="202"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fM0-P6-lJq">
-                                        <rect key="frame" x="0.0" y="90" width="343" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstItem="fM0-P6-lJq" firstAttribute="top" secondItem="9Fs-H7-Ga6" secondAttribute="top" constant="90" id="6FZ-nU-iy2"/>
-                                    <constraint firstItem="fM0-P6-lJq" firstAttribute="leading" secondItem="9Fs-H7-Ga6" secondAttribute="leading" id="DnR-I0-aNp"/>
-                                    <constraint firstAttribute="width" secondItem="9Fs-H7-Ga6" secondAttribute="height" multiplier="343:202" id="K3x-D6-Iu8"/>
-                                    <constraint firstAttribute="trailing" secondItem="fM0-P6-lJq" secondAttribute="trailing" id="PbZ-dV-EQH"/>
-                                    <constraint firstAttribute="bottom" secondItem="fM0-P6-lJq" secondAttribute="bottom" constant="91" id="jFe-pa-1D5"/>
-                                </constraints>
-                            </view>
-                            <view hidden="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QXL-pZ-18O">
+                            <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QXL-pZ-18O">
                                 <rect key="frame" x="67" y="342" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bw7-pK-gUZ">
                                         <rect key="frame" x="34" y="90" width="76" height="30"/>
@@ -141,20 +123,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="lwT-YI-db2" firstAttribute="bottom" secondItem="QXL-pZ-18O" secondAttribute="bottom" constant="259" id="2d8-LD-aru"/>
-                            <constraint firstItem="9Fs-H7-Ga6" firstAttribute="top" secondItem="LH8-f4-5MX" secondAttribute="bottom" constant="264" id="4mD-0c-YYn"/>
                             <constraint firstItem="LH8-f4-5MX" firstAttribute="trailing" secondItem="lwT-YI-db2" secondAttribute="trailing" id="5op-1a-wsK"/>
-                            <constraint firstItem="lwT-YI-db2" firstAttribute="trailing" secondItem="QXL-pZ-18O" secondAttribute="trailing" constant="68" id="8Cy-FZ-c6l"/>
                             <constraint firstItem="AP9-T9-8ka" firstAttribute="trailing" secondItem="lwT-YI-db2" secondAttribute="trailing" id="JIo-18-ibn"/>
                             <constraint firstItem="AP9-T9-8ka" firstAttribute="leading" secondItem="lwT-YI-db2" secondAttribute="leading" id="L8L-kM-Gin"/>
-                            <constraint firstItem="lwT-YI-db2" firstAttribute="trailing" secondItem="9Fs-H7-Ga6" secondAttribute="trailing" constant="16" id="MuO-EM-8O3"/>
                             <constraint firstItem="LH8-f4-5MX" firstAttribute="top" secondItem="KU6-tZ-KHJ" secondAttribute="top" constant="5" id="OIF-Ao-eGN"/>
-                            <constraint firstItem="9Fs-H7-Ga6" firstAttribute="leading" secondItem="lwT-YI-db2" secondAttribute="leading" constant="16" id="PNq-el-4fT"/>
                             <constraint firstItem="AP9-T9-8ka" firstAttribute="top" secondItem="LH8-f4-5MX" secondAttribute="bottom" id="XRN-JY-0rR"/>
                             <constraint firstItem="LH8-f4-5MX" firstAttribute="leading" secondItem="lwT-YI-db2" secondAttribute="leading" id="XrD-er-LUP"/>
                             <constraint firstItem="AP9-T9-8ka" firstAttribute="bottom" secondItem="lwT-YI-db2" secondAttribute="bottom" id="but-cL-9N5"/>
-                            <constraint firstItem="lwT-YI-db2" firstAttribute="bottom" secondItem="9Fs-H7-Ga6" secondAttribute="bottom" constant="214" id="hHr-89-1AJ"/>
-                            <constraint firstItem="QXL-pZ-18O" firstAttribute="leading" secondItem="lwT-YI-db2" secondAttribute="leading" constant="67" id="ksZ-wM-7fu"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="lwT-YI-db2"/>
                     </view>

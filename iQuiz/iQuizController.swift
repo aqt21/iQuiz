@@ -17,6 +17,7 @@ class iQuizController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var settingPopup: UIView!
     @IBOutlet weak var settingURL: UITextField!
+    @IBOutlet weak var alertPopup: UIView!
     
     var quizzes: [Quiz] = []
     var currUrl = "https://tednewardsandbox.site44.com/questions.json"
