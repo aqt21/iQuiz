@@ -17,7 +17,6 @@ class iQuizController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var settingPopup: UIView!
     @IBOutlet weak var settingURL: UITextField!
-    @IBOutlet weak var alertPopup: UIView!
     
     var quizzes: [Quiz] = []
     var currUrl = "https://tednewardsandbox.site44.com/questions.json"
@@ -54,20 +53,13 @@ class iQuizController: UIViewController {
                         self.quizzes.append(self.createQuizCell(title: quizDescriptions[i].title, desc: quizDescriptions[i].desc))
                         quizQuestions.append(self.createQuestions(subject: quizDescriptions[i].title, questions: quizDescriptions[i].questions))
                     }
-                } catch let jsonErr {
-                    let alert = UIAlertController(title: "My Alert", message: "Error downloading quiz. Check URL. HTTPS only supported", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: { _ in
-                        NSLog("The \"offline\" alert occured.")
-                    }))
+                } catch {
+                    self.showAlert(alert: "Error downloading quiz. Check URL. HTTPS only supported")
                 }
                 
                 }.resume()
         } else {
-            let alert = UIAlertController(title: "My Alert", message: "No wifi connection. Using local data.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: { _ in
-                NSLog("The \"offline\" alert occured.")
-            }))
-            self.present(alert, animated: true, completion: nil)
+            self.showAlert(alert: "No wifi connection. Using local data.")
             do {
                 let savedData: Data! = userDefaults.data(forKey: "savedQuizzes")
                 let quizDescriptions = try
@@ -76,8 +68,8 @@ class iQuizController: UIViewController {
                     self.quizzes.append(self.createQuizCell(title: quizDescriptions[i].title, desc: quizDescriptions[i].desc))
                     quizQuestions.append(self.createQuestions(subject: quizDescriptions[i].title, questions: quizDescriptions[i].questions))
                 }
-            } catch let jsonErr {
-                print("No data stored", jsonErr)
+            } catch {
+                self.showAlert(alert: "No data stored")
             }
         }
         
@@ -110,12 +102,8 @@ class iQuizController: UIViewController {
                         self.quizzes.append(self.createQuizCell(title: quizDescriptions[i].title, desc: quizDescriptions[i].desc))
                         quizQuestions.append(self.createQuestions(subject: quizDescriptions[i].title, questions: quizDescriptions[i].questions))
                     }
-                } catch let jsonErr {
-                    print("error")
-                    let alert = UIAlertController(title: "My Alert", message: "Error downloading quiz. Check URL. HTTPS only supported", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: { _ in
-                        NSLog("The \"offline\" alert occured.")
-                    }))
+                } catch {
+                    self.showAlert(alert: "Error downloading quiz. Check URL. HTTPS only supported")
                 }
                 
                 }.resume()
@@ -132,6 +120,14 @@ class iQuizController: UIViewController {
     
     @IBAction func cancelClick(_ sender: UIButton) {
         settingPopup.isHidden = true
+    }
+    
+    func showAlert(alert: String) {
+        let alert = UIAlertController(title: "My Alert", message: alert, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: { _ in
+            NSLog("The \"offline\" alert occured.")
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
     
     func getQuizzes(url: String) {
