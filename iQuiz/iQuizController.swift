@@ -17,6 +17,7 @@ class iQuizController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var settingPopup: UIView!
     @IBOutlet weak var settingURL: UITextField!
+    var alertView: UIAlertController?
     
     var quizzes: [Quiz] = []
     var currUrl = "https://tednewardsandbox.site44.com/questions.json"
@@ -57,9 +58,9 @@ class iQuizController: UIViewController {
                     self.showAlert(alert: "Error downloading quiz. Check URL. HTTPS only supported")
                 }
                 
-                }.resume()
+            }.resume()
         } else {
-            self.showAlert(alert: "No wifi connection. Using local data.")
+            
             do {
                 let savedData: Data! = userDefaults.data(forKey: "savedQuizzes")
                 let quizDescriptions = try
@@ -75,6 +76,12 @@ class iQuizController: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if !isInternetAvailable() {
+            self.showAlert(alert: "No wifi connection. Using local data.")
+        }
     }
     
     @IBAction func settingsClick(_ sender: UIBarButtonItem) {
@@ -123,11 +130,11 @@ class iQuizController: UIViewController {
     }
     
     func showAlert(alert: String) {
-        let alert = UIAlertController(title: "My Alert", message: alert, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: { _ in
+        alertView = UIAlertController(title: "Alert", message: alert, preferredStyle: .alert)
+        alertView!.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: { _ in
             NSLog("The \"offline\" alert occured.")
         }))
-        self.present(alert, animated: true, completion: nil)
+        self.present(alertView!, animated: true, completion: nil)
     }
     
     func getQuizzes(url: String) {
