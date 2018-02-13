@@ -7,6 +7,7 @@
 //
 
 import UIKit
+var quizQuestions: [QuizQuestions] = []
 
 class iQuizController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
@@ -40,6 +41,30 @@ class iQuizController: UIViewController {
         
         return tempQuizzes
     }
+    
+    func createQuestions() -> [QuizQuestions] {
+        var tempQuestions: [QuizQuestions] = []
+        var marvelSubject = quizzes[0].title
+        var marvelQuestions: [String] = []
+        var marvelAnswers: [[String]] = []
+        var marvelRightAnswers: [String] = []
+        let marvelQuestion1 = "What superhero is Tony Stark?"
+        let marvelAnswers1 = ["The Hulk", "Iron Man", "Green Lantern", "Spiderman"]
+        let marvelRightAnswer1 = "Iron Man"
+        marvelQuestions.append(marvelQuestion1)
+        marvelAnswers.append(marvelAnswers1)
+        marvelRightAnswers.append(marvelRightAnswer1)
+        let marvelQuestion2 = "What is Spideman's middle name?"
+        let marvelAnswers2 = ["Benjamin", "William", "Brode", "Jackson"]
+        let marvelRightAnswer2 = "Benjamin"
+        marvelQuestions.append(marvelQuestion2)
+        marvelAnswers.append(marvelAnswers2)
+        marvelRightAnswers.append(marvelRightAnswer2)
+        
+        let marvelQ1 = QuizQuestions(subject: marvelSubject, questions: marvelQuestions, answers: marvelAnswers, rightAnswers: marvelRightAnswers)
+        tempQuestions.append(marvelQ1)
+        return tempQuestions
+    }
 }
 
 extension iQuizController: UITableViewDataSource, UITableViewDelegate {
@@ -54,5 +79,9 @@ extension iQuizController: UITableViewDataSource, UITableViewDelegate {
         cell.setQuiz(quiz: quiz)
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        <#code#>
     }
 }
