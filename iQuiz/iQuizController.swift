@@ -8,6 +8,7 @@
 
 import UIKit
 var quizQuestions: [QuizQuestions] = []
+var currSubject: Int = 0
 
 class iQuizController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
@@ -17,6 +18,7 @@ class iQuizController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         quizzes = createArray()
+        quizQuestions = createQuestions()
         tableView.delegate = self
         tableView.dataSource = self
     }
@@ -44,7 +46,7 @@ class iQuizController: UIViewController {
     
     func createQuestions() -> [QuizQuestions] {
         var tempQuestions: [QuizQuestions] = []
-        var marvelSubject = quizzes[0].title
+        let marvelSubject = quizzes[0].title
         var marvelQuestions: [String] = []
         var marvelAnswers: [[String]] = []
         var marvelRightAnswers: [String] = []
@@ -54,15 +56,46 @@ class iQuizController: UIViewController {
         marvelQuestions.append(marvelQuestion1)
         marvelAnswers.append(marvelAnswers1)
         marvelRightAnswers.append(marvelRightAnswer1)
-        let marvelQuestion2 = "What is Spideman's middle name?"
+        let marvelQuestion2 = "What is Peter Parkers middle name?"
         let marvelAnswers2 = ["Benjamin", "William", "Brode", "Jackson"]
         let marvelRightAnswer2 = "Benjamin"
         marvelQuestions.append(marvelQuestion2)
         marvelAnswers.append(marvelAnswers2)
         marvelRightAnswers.append(marvelRightAnswer2)
-        
+        let marvelQuestion3 = "Which villain possessed the Infinity Gems"
+        let marvelAnswers3 = ["Loki", "Galactus", "Thanos", "Magneto"]
+        let marvelRightAnswer3 = "Thanos"
+        marvelQuestions.append(marvelQuestion3)
+        marvelAnswers.append(marvelAnswers3)
+        marvelRightAnswers.append(marvelRightAnswer3)
         let marvelQ1 = QuizQuestions(subject: marvelSubject, questions: marvelQuestions, answers: marvelAnswers, rightAnswers: marvelRightAnswers)
         tempQuestions.append(marvelQ1)
+        
+        let mathSubject = quizzes[1].title
+        var mathQuestions: [String] = []
+        var mathAnswers: [[String]] = []
+        var mathRightAnswers: [String] = []
+        let mathQuestion1 = "What is 4 * 3?"
+        let mathAnswers1 = ["15", "20", "17", "12"]
+        let mathRightAnswer1 = "12"
+        mathQuestions.append(mathQuestion1)
+        mathAnswers.append(mathAnswers1)
+        mathRightAnswers.append(mathRightAnswer1)
+        let mathQ1 = QuizQuestions(subject: mathSubject, questions: mathQuestions, answers: mathAnswers, rightAnswers: mathRightAnswers)
+        tempQuestions.append(mathQ1)
+        
+        let scienceSubject = quizzes[2].title
+        var scienceQuestions: [String] = []
+        var scienceAnswers: [[String]] = []
+        var scienceRightAnswers: [String] = []
+        let scienceQuestion1 = "What element does the symbol As stand for"
+        let scienceAnswers1 = ["Astatine", "Arsenic", "Actinium", "Argon"]
+        let scienceRightAnswer1 = "Arsenic"
+        scienceQuestions.append(scienceQuestion1)
+        scienceAnswers.append(scienceAnswers1)
+        scienceRightAnswers.append(scienceRightAnswer1)
+        let scienceQ1 = QuizQuestions(subject: scienceSubject, questions: scienceQuestions, answers: scienceAnswers, rightAnswers: scienceRightAnswers)
+        tempQuestions.append(scienceQ1)
         return tempQuestions
     }
 }
@@ -82,6 +115,7 @@ extension iQuizController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        <#code#>
+        currSubject = indexPath.row
+        performSegue(withIdentifier: "homeToQuestion", sender: tableView)
     }
 }

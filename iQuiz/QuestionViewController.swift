@@ -7,29 +7,40 @@
 //
 
 import UIKit
+var currQuestion: Int = 0
+var isRight = false
+var currScore = 0
 
 class QuestionViewController: UIViewController {
-
+    @IBOutlet weak var questionText: UILabel!
+    @IBOutlet weak var answerControl: UISegmentedControl!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        if currQuestion < quizQuestions.count {
+            let currInfo = quizQuestions[currSubject]
+            questionText.text = currInfo.questions[currQuestion]
+            for var i in 0 ... 3 {
+                self.answerControl.setTitle(currInfo.answers[currQuestion][i], forSegmentAt: i)
+            }
+        }
+        
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    @IBAction func submitClick(_ sender: UIButton) {
+        if answerControl.titleForSegment(at: answerControl.selectedSegmentIndex)! == quizQuestions[currSubject].rightAnswers[currQuestion] {
+            isRight = true
+            currScore += 1
+        } else {
+            isRight = false
+        }
+        if currQuestion < quizQuestions[currSubject].questions.count - 1 {
+            performSegue(withIdentifier: "toAnswer", sender: sender)
+        } else {
+            performSegue(withIdentifier: "toFinished", sender: sender)
+        }
+        
     }
-    */
-
+    
 }
+
