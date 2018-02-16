@@ -192,12 +192,12 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fMv-NL-Z43" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <swipeGestureRecognizer direction="right" id="jBn-pT-2EC">
                     <connections>
-                        <action selector="backClick:" destination="W1a-hF-kAE" id="JeN-Op-gcg"/>
+                        <action selector="submitClick:" destination="W1a-hF-kAE" id="Xd4-Vn-sUR"/>
                     </connections>
                 </swipeGestureRecognizer>
                 <swipeGestureRecognizer direction="left" id="MXb-rR-SK0">
                     <connections>
-                        <action selector="submitClick:" destination="W1a-hF-kAE" id="C47-xE-QFo"/>
+                        <action selector="backClick:" destination="W1a-hF-kAE" id="BQh-9E-8DC"/>
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
@@ -310,12 +310,12 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Aw-Of-dSU" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer direction="right" id="3KS-eu-ALq">
+                <swipeGestureRecognizer direction="left" id="3KS-eu-ALq">
                     <connections>
                         <action selector="backClick:" destination="Wun-i4-IuY" id="pDl-Vr-k52"/>
                     </connections>
                 </swipeGestureRecognizer>
-                <swipeGestureRecognizer direction="left" id="7Mm-mQ-WU7">
+                <swipeGestureRecognizer direction="right" id="7Mm-mQ-WU7">
                     <connections>
                         <action selector="nextClick:" destination="Wun-i4-IuY" id="RD6-PG-EWv"/>
                     </connections>
@@ -428,12 +428,12 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2q4-fp-0Tn" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer direction="right" id="OIh-xt-Yd2">
+                <swipeGestureRecognizer direction="left" id="OIh-xt-Yd2">
                     <connections>
                         <action selector="backClick:" destination="oWT-gv-SrC" id="47e-CD-EbM"/>
                     </connections>
                 </swipeGestureRecognizer>
-                <swipeGestureRecognizer direction="left" id="UeK-tj-ICT">
+                <swipeGestureRecognizer direction="right" id="UeK-tj-ICT">
                     <connections>
                         <action selector="backClick:" destination="oWT-gv-SrC" id="qo2-hX-wzL"/>
                     </connections>
@@ -445,6 +445,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="OKQ-o0-aRW"/>
         <segue reference="zST-am-rbq"/>
-        <segue reference="BxL-5F-1Hb"/>
+        <segue reference="WaL-Mi-MCG"/>
     </inferredMetricsTieBreakers>
 </document>
