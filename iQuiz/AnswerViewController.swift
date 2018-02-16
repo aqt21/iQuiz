@@ -11,6 +11,7 @@ import UIKit
 class AnswerViewController: UIViewController {
     @IBOutlet weak var userAnswer: UILabel!
     @IBOutlet weak var correctAnswer: UILabel!
+    @IBOutlet weak var questionText: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,14 +23,24 @@ class AnswerViewController: UIViewController {
             userAnswer.text = "WRONG"
             userAnswer.textColor = UIColor.red
         }
-        
+        questionText.text = quizQuestions[currSubject].questions[currQuestion]
         correctAnswer.text = quizQuestions[currSubject].rightAnswers[currQuestion]
     }
 
 
     @IBAction func nextClick(_ sender: UIButton) {
-        currQuestion += 1
-        performSegue(withIdentifier: "toQuestion", sender: sender)
+        if currQuestion < quizQuestions[currSubject].questions.count - 1 {
+            currQuestion += 1
+            performSegue(withIdentifier: "toQuestion", sender: sender)
+        } else {
+            performSegue(withIdentifier: "answerToFinished", sender: sender)
+        }
+    }
+    
+    @IBAction func backClick(_ sender: UIBarButtonItem) {
+        currQuestion = 0
+        currScore = 0
+        performSegue(withIdentifier: "answerToHome", sender: sender)
     }
     
 }

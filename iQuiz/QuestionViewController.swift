@@ -34,13 +34,14 @@ class QuestionViewController: UIViewController {
         } else {
             isRight = false
         }
-        if currQuestion < quizQuestions[currSubject].questions.count - 1 {
-            performSegue(withIdentifier: "toAnswer", sender: sender)
-        } else {
-            performSegue(withIdentifier: "toFinished", sender: sender)
-        }
+        performSegue(withIdentifier: "toAnswer", sender: sender)
+
         
     }
-    
+    @IBAction func backClick(_ sender: UIBarButtonItem) {
+        currQuestion = 0
+        currScore = 0
+        performSegue(withIdentifier: "questionToHome", sender: sender)
+    }
 }
 

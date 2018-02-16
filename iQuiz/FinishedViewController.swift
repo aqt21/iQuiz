@@ -32,4 +32,10 @@ class FinishedViewController: UIViewController {
         currScore = 0
         currQuestion = 0
     }
+    
+    @IBAction func backClick(_ sender: UIBarButtonItem) {
+        currQuestion = 0
+        currScore = 0
+        performSegue(withIdentifier: "finishedToHome", sender: sender)
+    }
 }
