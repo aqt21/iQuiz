@@ -68,6 +68,8 @@ class iQuizController: UIViewController {
         marvelQuestions.append(marvelQuestion3)
         marvelAnswers.append(marvelAnswers3)
         marvelRightAnswers.append(marvelRightAnswer3)
+        var marvelQQ : QuizQuestions
+        
         let marvelQ1 = QuizQuestions(subject: marvelSubject, questions: marvelQuestions, answers: marvelAnswers, rightAnswers: marvelRightAnswers)
         tempQuestions.append(marvelQ1)
         
