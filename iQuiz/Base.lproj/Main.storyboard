@@ -160,6 +160,7 @@
                             </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="KJ7-ku-aKZ" firstAttribute="leading" secondItem="8fm-vi-xbR" secondAttribute="leading" constant="24" id="016-IG-pWT"/>
                             <constraint firstItem="8fm-vi-xbR" firstAttribute="trailing" secondItem="KJ7-ku-aKZ" secondAttribute="trailing" constant="24" id="4x1-iX-soC"/>
@@ -175,6 +176,10 @@
                             <constraint firstItem="8fm-vi-xbR" firstAttribute="bottom" secondItem="8Ya-Si-45a" secondAttribute="bottom" id="yKc-2X-vGR"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="8fm-vi-xbR"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="jBn-pT-2EC" appends="YES" id="dID-jp-S8X"/>
+                            <outletCollection property="gestureRecognizers" destination="MXb-rR-SK0" appends="YES" id="txy-zt-y18"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="answerControl" destination="WeZ-pi-2ad" id="JAH-qX-czl"/>
@@ -185,6 +190,16 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fMv-NL-Z43" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="right" id="jBn-pT-2EC">
+                    <connections>
+                        <action selector="backClick:" destination="W1a-hF-kAE" id="JeN-Op-gcg"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="left" id="MXb-rR-SK0">
+                    <connections>
+                        <action selector="submitClick:" destination="W1a-hF-kAE" id="C47-xE-QFo"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1302" y="-528"/>
         </scene>
@@ -254,6 +269,7 @@
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="0Tc-H5-vTf" firstAttribute="leading" secondItem="7Vx-CK-NRI" secondAttribute="leading" id="0Dq-2u-hSQ"/>
                             <constraint firstItem="2ar-49-Zdm" firstAttribute="top" secondItem="7Vx-CK-NRI" secondAttribute="top" constant="125" id="179-pY-bsl"/>
@@ -279,6 +295,10 @@
                             <constraint firstItem="5ra-8b-2Sr" firstAttribute="top" secondItem="UNk-cR-BWq" secondAttribute="bottom" constant="16" id="uih-b7-HIo"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="7Vx-CK-NRI"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="3KS-eu-ALq" appends="YES" id="YFh-s3-QDx"/>
+                            <outletCollection property="gestureRecognizers" destination="7Mm-mQ-WU7" appends="YES" id="YL7-PZ-GPa"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="correctAnswer" destination="5ra-8b-2Sr" id="aIa-eV-6hI"/>
@@ -290,6 +310,16 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Aw-Of-dSU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="right" id="3KS-eu-ALq">
+                    <connections>
+                        <action selector="backClick:" destination="Wun-i4-IuY" id="pDl-Vr-k52"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="left" id="7Mm-mQ-WU7">
+                    <connections>
+                        <action selector="nextClick:" destination="Wun-i4-IuY" id="RD6-PG-EWv"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="2301.5999999999999" y="-528.32512315270935"/>
         </scene>
@@ -363,6 +393,7 @@
                             </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="smk-j3-fob" firstAttribute="trailing" secondItem="FgZ-0I-S6z" secondAttribute="trailing" id="0ee-bY-7yC"/>
                             <constraint firstItem="FgZ-0I-S6z" firstAttribute="leading" secondItem="smk-j3-fob" secondAttribute="leading" id="3Gz-f7-RWQ"/>
@@ -386,6 +417,10 @@
                             <constraint firstItem="h7E-a6-xzS" firstAttribute="top" secondItem="smk-j3-fob" secondAttribute="top" constant="128" id="seU-RX-fet"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="smk-j3-fob"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="OIh-xt-Yd2" appends="YES" id="MO2-fW-jL6"/>
+                            <outletCollection property="gestureRecognizers" destination="UeK-tj-ICT" appends="YES" id="9Xm-Ha-EFt"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="finishedText" destination="h7E-a6-xzS" id="pDJ-cc-zlh"/>
@@ -393,6 +428,16 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2q4-fp-0Tn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="right" id="OIh-xt-Yd2">
+                    <connections>
+                        <action selector="backClick:" destination="oWT-gv-SrC" id="47e-CD-EbM"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="left" id="UeK-tj-ICT">
+                    <connections>
+                        <action selector="backClick:" destination="oWT-gv-SrC" id="qo2-hX-wzL"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="3224.8000000000002" y="-538.66995073891633"/>
         </scene>

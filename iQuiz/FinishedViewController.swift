@@ -28,12 +28,12 @@ class FinishedViewController: UIViewController {
         scoreText.text =  "\(currScore) / \(totalQuestions)"
     }
 
-    @IBAction func finishedClick(_ sender: UIButton) {
+    @IBAction func finishedClick(_ sender: Any) {
         currScore = 0
         currQuestion = 0
     }
     
-    @IBAction func backClick(_ sender: UIBarButtonItem) {
+    @IBAction func backClick(_ sender: Any) {
         currQuestion = 0
         currScore = 0
         performSegue(withIdentifier: "finishedToHome", sender: sender)

@@ -27,7 +27,7 @@ class QuestionViewController: UIViewController {
         
     }
     
-    @IBAction func submitClick(_ sender: UIButton) {
+    @IBAction func submitClick(_ sender: Any) {
         if answerControl.titleForSegment(at: answerControl.selectedSegmentIndex)! == quizQuestions[currSubject].rightAnswers[currQuestion] {
             isRight = true
             currScore += 1
@@ -38,7 +38,9 @@ class QuestionViewController: UIViewController {
 
         
     }
-    @IBAction func backClick(_ sender: UIBarButtonItem) {
+
+
+    @IBAction func backClick(_ sender: Any) {
         currQuestion = 0
         currScore = 0
         performSegue(withIdentifier: "questionToHome", sender: sender)

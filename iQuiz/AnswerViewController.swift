@@ -28,7 +28,7 @@ class AnswerViewController: UIViewController {
     }
 
 
-    @IBAction func nextClick(_ sender: UIButton) {
+    @IBAction func nextClick(_ sender: Any) {
         if currQuestion < quizQuestions[currSubject].questions.count - 1 {
             currQuestion += 1
             performSegue(withIdentifier: "toQuestion", sender: sender)
@@ -37,7 +37,7 @@ class AnswerViewController: UIViewController {
         }
     }
     
-    @IBAction func backClick(_ sender: UIBarButtonItem) {
+    @IBAction func backClick(_ sender: Any) {
         currQuestion = 0
         currScore = 0
         performSegue(withIdentifier: "answerToHome", sender: sender)
